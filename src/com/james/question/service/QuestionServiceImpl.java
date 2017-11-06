@@ -8,8 +8,11 @@ import java.util.List;
 @Service
 public class QuestionServiceImpl  implements QuestionService{
 
+    private List<Question> questions;
+
     @Override
     public List<Question> getAllQuestions() {
-        return null;
+        return questions;
     }
+
 }
