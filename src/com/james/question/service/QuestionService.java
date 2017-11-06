@@ -7,4 +7,5 @@ import java.util.List;
 public interface QuestionService {
 
     List<Question> getAllQuestions();
+    Question getQuestion(int id);
 }
