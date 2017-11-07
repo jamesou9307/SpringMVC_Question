@@ -1,15 +1,21 @@
 package com.james.question.service;
 
+import com.james.question.entity.Answer;
 import com.james.question.entity.Question;
+import com.james.question.form.AnswerForm;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Service
 public class QuestionServiceImpl  implements QuestionService{
 
     private List<Question> questions;
+    private static final  Log logger= LogFactory.getLog(QuestionServiceImpl.class);
 
     @Override
     public List<Question> getAllQuestions() {
@@ -37,10 +43,24 @@ public class QuestionServiceImpl  implements QuestionService{
         for(Question question:questions){
             if (question.getId()==id){
                 target=question;
-                break;
+
 
             }
         }
         return target;
+    }
+
+    @Override
+    public int getScore(AnswerForm answerForm) {
+        int score=0;
+        for(Answer answer:answerForm.getAnswers()){
+            Question question=getQuestion(answer.getQuestionId());
+            logger.info(question.getId()+":"+answer.getAnswer()+" "+question.getCorrectAnswer());
+            if(answer.getAnswer().equals(question.getCorrectAnswer())){
+                score+=question.getPoint();
+
+            }
+        }
+        return score;
     }
 }
